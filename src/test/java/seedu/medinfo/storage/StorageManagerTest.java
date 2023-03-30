@@ -2,7 +2,7 @@ package seedu.medinfo.storage;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static seedu.medinfo.testutil.TypicalPatients.getTypicalAddressBook;
+import static seedu.medinfo.testutil.TypicalPatients.getTypicalMedInfo;
 
 import java.nio.file.Path;
 
@@ -24,9 +24,9 @@ public class StorageManagerTest {
 
     @BeforeEach
     public void setUp() {
-        JsonMedInfoStorage addressBookStorage = new JsonMedInfoStorage(getTempFilePath("ab"));
+        JsonMedInfoStorage MedInfoStorage = new JsonMedInfoStorage(getTempFilePath("ab"));
         JsonUserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(getTempFilePath("prefs"));
-        storageManager = new StorageManager(addressBookStorage, userPrefsStorage);
+        storageManager = new StorageManager(MedInfoStorage, userPrefsStorage);
     }
 
     private Path getTempFilePath(String fileName) {
@@ -48,21 +48,21 @@ public class StorageManagerTest {
     }
 
     @Test
-    public void addressBookReadSave() throws Exception {
+    public void MedInfoReadSave() throws Exception {
         /*
          * Note: This is an integration test that verifies the StorageManager is properly wired to the
          * {@link JsonMedInfoStorage} class.
          * More extensive testing of UserPref saving/reading is done in {@link JsonMedInfoStorageTest} class.
          */
-        MedInfo original = getTypicalAddressBook();
-        storageManager.saveAddressBook(original);
-        ReadOnlyMedInfo retrieved = storageManager.readAddressBook().get();
+        MedInfo original = getTypicalMedInfo();
+        storageManager.saveMedInfo(original);
+        ReadOnlyMedInfo retrieved = storageManager.readMedInfo().get();
         assertEquals(original, new MedInfo(retrieved));
     }
 
     @Test
-    public void getAddressBookFilePath() {
-        assertNotNull(storageManager.getAddressBookFilePath());
+    public void getMedInfoFilePath() {
+        assertNotNull(storageManager.getMedInfoFilePath());
     }
 
 }

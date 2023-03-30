@@ -16,7 +16,7 @@ public interface MedInfoStorage {
     /**
      * Returns the file path of the data file.
      */
-    Path getAddressBookFilePath();
+    Path getMedInfoFilePath();
 
     /**
      * Returns MedInfo data as a {@link ReadOnlyMedInfo}.
@@ -24,23 +24,23 @@ public interface MedInfoStorage {
      * @throws DataConversionException if the data in storage is not in the expected format.
      * @throws IOException if there was any problem when reading from the storage.
      */
-    Optional<ReadOnlyMedInfo> readAddressBook() throws DataConversionException, IOException;
+    Optional<ReadOnlyMedInfo> readMedInfo() throws DataConversionException, IOException;
 
     /**
-     * @see #getAddressBookFilePath()
+     * @see #getMedInfoFilePath()
      */
-    Optional<ReadOnlyMedInfo> readAddressBook(Path filePath) throws DataConversionException, IOException;
+    Optional<ReadOnlyMedInfo> readMedInfo(Path filePath) throws DataConversionException, IOException;
 
     /**
      * Saves the given {@link ReadOnlyMedInfo} to the storage.
      * @param addressBook cannot be null.
      * @throws IOException if there was any problem writing to the file.
      */
-    void saveAddressBook(ReadOnlyMedInfo addressBook) throws IOException;
+    void saveMedInfo(ReadOnlyMedInfo addressBook) throws IOException;
 
     /**
-     * @see #saveAddressBook(ReadOnlyMedInfo)
+     * @see #saveMedInfo(ReadOnlyMedInfo)
      */
-    void saveAddressBook(ReadOnlyMedInfo addressBook, Path filePath) throws IOException;
+    void saveMedInfo(ReadOnlyMedInfo addressBook, Path filePath) throws IOException;
 
 }

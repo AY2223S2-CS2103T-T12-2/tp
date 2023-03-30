@@ -27,32 +27,32 @@ public class JsonMedInfoStorage implements MedInfoStorage {
         this.filePath = filePath;
     }
 
-    public Path getAddressBookFilePath() {
+    public Path getMedInfoFilePath() {
         return filePath;
     }
 
     @Override
-    public Optional<ReadOnlyMedInfo> readAddressBook() throws DataConversionException {
-        return readAddressBook(filePath);
+    public Optional<ReadOnlyMedInfo> readMedInfo() throws DataConversionException {
+        return readMedInfo(filePath);
     }
 
     /**
-     * Similar to {@link #readAddressBook()}.
+     * Similar to {@link #readMedInfo()}.
      *
      * @param filePath location of the data. Cannot be null.
      * @throws DataConversionException if the file is not in the correct format.
      */
-    public Optional<ReadOnlyMedInfo> readAddressBook(Path filePath) throws DataConversionException {
+    public Optional<ReadOnlyMedInfo> readMedInfo(Path filePath) throws DataConversionException {
         requireNonNull(filePath);
 
-        Optional<JsonSerializableMedInfo> jsonAddressBook = JsonUtil.readJsonFile(
+        Optional<JsonSerializableMedInfo> jsonMedInfo = JsonUtil.readJsonFile(
                 filePath, JsonSerializableMedInfo.class);
-        if (!jsonAddressBook.isPresent()) {
+        if (!jsonMedInfo.isPresent()) {
             return Optional.empty();
         }
 
         try {
-            return Optional.of(jsonAddressBook.get().toModelType());
+            return Optional.of(jsonMedInfo.get().toModelType());
         } catch (IllegalValueException ive) {
             logger.info("Illegal values found in " + filePath + ": " + ive.getMessage());
             throw new DataConversionException(ive);
@@ -60,21 +60,21 @@ public class JsonMedInfoStorage implements MedInfoStorage {
     }
 
     @Override
-    public void saveAddressBook(ReadOnlyMedInfo addressBook) throws IOException {
-        saveAddressBook(addressBook, filePath);
+    public void saveMedInfo(ReadOnlyMedInfo MedInfo) throws IOException {
+        saveMedInfo(MedInfo, filePath);
     }
 
     /**
-     * Similar to {@link #saveAddressBook(ReadOnlyMedInfo)}.
+     * Similar to {@link #saveMedInfo(ReadOnlyMedInfo)}.
      *
      * @param filePath location of the data. Cannot be null.
      */
-    public void saveAddressBook(ReadOnlyMedInfo addressBook, Path filePath) throws IOException {
-        requireNonNull(addressBook);
+    public void saveMedInfo(ReadOnlyMedInfo MedInfo, Path filePath) throws IOException {
+        requireNonNull(MedInfo);
         requireNonNull(filePath);
 
         FileUtil.createIfMissing(filePath);
-        JsonUtil.saveJsonFile(new JsonSerializableMedInfo(addressBook), filePath);
+        JsonUtil.saveJsonFile(new JsonSerializableMedInfo(MedInfo), filePath);
     }
 
 }

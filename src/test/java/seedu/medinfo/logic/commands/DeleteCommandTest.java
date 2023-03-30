@@ -7,7 +7,7 @@ import static seedu.medinfo.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.medinfo.logic.commands.CommandTestUtil.showPersonAtIndex;
 import static seedu.medinfo.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.medinfo.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
-import static seedu.medinfo.testutil.TypicalPatients.getTypicalAddressBook;
+import static seedu.medinfo.testutil.TypicalPatients.getTypicalMedInfo;
 
 import org.junit.jupiter.api.Test;
 
@@ -24,7 +24,7 @@ import seedu.medinfo.model.patient.Patient;
  */
 public class DeleteCommandTest {
 
-    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+    private Model model = new ModelManager(getTypicalMedInfo(), new UserPrefs());
 
     @Test
     public void execute_validIndexUnfilteredList_success() {

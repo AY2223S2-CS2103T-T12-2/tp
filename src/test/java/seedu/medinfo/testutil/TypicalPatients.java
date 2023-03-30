@@ -70,7 +70,7 @@ public class TypicalPatients {
     /**
      * Returns an {@code MedInfo} with all the typical persons.
      */
-    public static MedInfo getTypicalAddressBook() {
+    public static MedInfo getTypicalMedInfo() {
         MedInfo ab = new MedInfo();
 
         for (Ward ward : getTypicalWards()) {

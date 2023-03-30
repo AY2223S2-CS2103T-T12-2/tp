@@ -49,30 +49,30 @@ public class StorageManager implements Storage {
     // ================ MedInfo methods ==============================
 
     @Override
-    public Path getAddressBookFilePath() {
-        return medInfoStorage.getAddressBookFilePath();
+    public Path getMedInfoFilePath() {
+        return medInfoStorage.getMedInfoFilePath();
     }
 
     @Override
-    public Optional<ReadOnlyMedInfo> readAddressBook() throws DataConversionException, IOException {
-        return readAddressBook(medInfoStorage.getAddressBookFilePath());
+    public Optional<ReadOnlyMedInfo> readMedInfo() throws DataConversionException, IOException {
+        return readMedInfo(medInfoStorage.getMedInfoFilePath());
     }
 
     @Override
-    public Optional<ReadOnlyMedInfo> readAddressBook(Path filePath) throws DataConversionException, IOException {
+    public Optional<ReadOnlyMedInfo> readMedInfo(Path filePath) throws DataConversionException, IOException {
         logger.fine("Attempting to read data from file: " + filePath);
-        return medInfoStorage.readAddressBook(filePath);
+        return medInfoStorage.readMedInfo(filePath);
     }
 
     @Override
-    public void saveAddressBook(ReadOnlyMedInfo addressBook) throws IOException {
-        saveAddressBook(addressBook, medInfoStorage.getAddressBookFilePath());
+    public void saveMedInfo(ReadOnlyMedInfo addressBook) throws IOException {
+        saveMedInfo(addressBook, medInfoStorage.getMedInfoFilePath());
     }
 
     @Override
-    public void saveAddressBook(ReadOnlyMedInfo addressBook, Path filePath) throws IOException {
+    public void saveMedInfo(ReadOnlyMedInfo addressBook, Path filePath) throws IOException {
         logger.fine("Attempting to write to data file: " + filePath);
-        medInfoStorage.saveAddressBook(addressBook, filePath);
+        medInfoStorage.saveMedInfo(addressBook, filePath);
     }
 
 }

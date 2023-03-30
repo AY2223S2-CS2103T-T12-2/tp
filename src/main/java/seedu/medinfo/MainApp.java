@@ -77,7 +77,7 @@ public class MainApp extends Application {
         Optional<ReadOnlyMedInfo> addressBookOptional;
         ReadOnlyMedInfo initialData;
         try {
-            addressBookOptional = storage.readAddressBook();
+            addressBookOptional = storage.readMedInfo();
             if (!addressBookOptional.isPresent()) {
                 logger.info("Data file not found. Will be starting with a sample MedInfo");
             }

@@ -21,12 +21,12 @@ public interface Storage extends MedInfoStorage, UserPrefsStorage {
     void saveUserPrefs(ReadOnlyUserPrefs userPrefs) throws IOException;
 
     @Override
-    Path getAddressBookFilePath();
+    Path getMedInfoFilePath();
 
     @Override
-    Optional<ReadOnlyMedInfo> readAddressBook() throws DataConversionException, IOException;
+    Optional<ReadOnlyMedInfo> readMedInfo() throws DataConversionException, IOException;
 
     @Override
-    void saveAddressBook(ReadOnlyMedInfo addressBook) throws IOException;
+    void saveMedInfo(ReadOnlyMedInfo addressBook) throws IOException;
 
 }

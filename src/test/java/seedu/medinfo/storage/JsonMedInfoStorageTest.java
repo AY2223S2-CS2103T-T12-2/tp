@@ -6,7 +6,7 @@ import static seedu.medinfo.testutil.Assert.assertThrows;
 import static seedu.medinfo.testutil.TypicalPatients.ALEX;
 import static seedu.medinfo.testutil.TypicalPatients.HOON;
 import static seedu.medinfo.testutil.TypicalPatients.IDA;
-import static seedu.medinfo.testutil.TypicalPatients.getTypicalAddressBook;
+import static seedu.medinfo.testutil.TypicalPatients.getTypicalMedInfo;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -26,12 +26,12 @@ public class JsonMedInfoStorageTest {
     public Path testFolder;
 
     @Test
-    public void readAddressBook_nullFilePath_throwsNullPointerException() {
-        assertThrows(NullPointerException.class, () -> readAddressBook(null));
+    public void readMedInfo_nullFilePath_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> readMedInfo(null));
     }
 
-    private java.util.Optional<ReadOnlyMedInfo> readAddressBook(String filePath) throws Exception {
-        return new JsonMedInfoStorage(Paths.get(filePath)).readAddressBook(addToTestDataPathIfNotNull(filePath));
+    private java.util.Optional<ReadOnlyMedInfo> readMedInfo(String filePath) throws Exception {
+        return new JsonMedInfoStorage(Paths.get(filePath)).readMedInfo(addToTestDataPathIfNotNull(filePath));
     }
 
     private Path addToTestDataPathIfNotNull(String prefsFileInTestDataFolder) {
@@ -42,68 +42,68 @@ public class JsonMedInfoStorageTest {
 
     @Test
     public void read_missingFile_emptyResult() throws Exception {
-        assertFalse(readAddressBook("NonExistentFile.json").isPresent());
+        assertFalse(readMedInfo("NonExistentFile.json").isPresent());
     }
 
     @Test
     public void read_notJsonFormat_exceptionThrown() {
-        assertThrows(DataConversionException.class, () -> readAddressBook("notJsonFormatMedInfo.json"));
+        assertThrows(DataConversionException.class, () -> readMedInfo("notJsonFormatMedInfo.json"));
     }
 
     @Test
-    public void readAddressBook_invalidPersonAddressBook_throwDataConversionException() {
-        assertThrows(DataConversionException.class, () -> readAddressBook("invalidPatientMedInfo.json"));
+    public void readMedInfo_invalidPersonMedInfo_throwDataConversionException() {
+        assertThrows(DataConversionException.class, () -> readMedInfo("invalidPatientMedInfo.json"));
     }
 
     @Test
-    public void readAddressBook_invalidAndValidPersonAddressBook_throwDataConversionException() {
-        assertThrows(DataConversionException.class, () -> readAddressBook("invalidAndValidPatientMedInfo.json"));
+    public void readMedInfo_invalidAndValidPersonMedInfo_throwDataConversionException() {
+        assertThrows(DataConversionException.class, () -> readMedInfo("invalidAndValidPatientMedInfo.json"));
     }
 
     @Test
-    public void readAndSaveAddressBook_allInOrder_success() throws Exception {
-        Path filePath = testFolder.resolve("TempAddressBook.json");
-        MedInfo original = getTypicalAddressBook();
-        JsonMedInfoStorage jsonAddressBookStorage = new JsonMedInfoStorage(filePath);
+    public void readAndSaveMedInfo_allInOrder_success() throws Exception {
+        Path filePath = testFolder.resolve("TempMedInfo.json");
+        MedInfo original = getTypicalMedInfo();
+        JsonMedInfoStorage jsonMedInfoStorage = new JsonMedInfoStorage(filePath);
 
         // Save in new file and read back
-        jsonAddressBookStorage.saveAddressBook(original, filePath);
-        ReadOnlyMedInfo readBack = jsonAddressBookStorage.readAddressBook(filePath).get();
+        jsonMedInfoStorage.saveMedInfo(original, filePath);
+        ReadOnlyMedInfo readBack = jsonMedInfoStorage.readMedInfo(filePath).get();
         assertEquals(original, new MedInfo(readBack));
 
         // Modify data, overwrite exiting file, and read back
         original.addPatient(HOON);
         original.removePatient(ALEX);
-        jsonAddressBookStorage.saveAddressBook(original, filePath);
-        readBack = jsonAddressBookStorage.readAddressBook(filePath).get();
+        jsonMedInfoStorage.saveMedInfo(original, filePath);
+        readBack = jsonMedInfoStorage.readMedInfo(filePath).get();
         assertEquals(original, new MedInfo(readBack));
 
         // Save and read without specifying file path
         original.addPatient(IDA);
-        jsonAddressBookStorage.saveAddressBook(original); // file path not specified
-        readBack = jsonAddressBookStorage.readAddressBook().get(); // file path not specified
+        jsonMedInfoStorage.saveMedInfo(original); // file path not specified
+        readBack = jsonMedInfoStorage.readMedInfo().get(); // file path not specified
         assertEquals(original, new MedInfo(readBack));
     }
 
     @Test
-    public void saveAddressBook_nullAddressBook_throwsNullPointerException() {
-        assertThrows(NullPointerException.class, () -> saveAddressBook(null, "SomeFile.json"));
+    public void saveMedInfo_nullMedInfo_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> saveMedInfo(null, "SomeFile.json"));
     }
 
     /**
-     * Saves {@code addressBook} at the specified {@code filePath}.
+     * Saves {@code MedInfo} at the specified {@code filePath}.
      */
-    private void saveAddressBook(ReadOnlyMedInfo addressBook, String filePath) {
+    private void saveMedInfo(ReadOnlyMedInfo MedInfo, String filePath) {
         try {
             new JsonMedInfoStorage(Paths.get(filePath))
-                    .saveAddressBook(addressBook, addToTestDataPathIfNotNull(filePath));
+                    .saveMedInfo(MedInfo, addToTestDataPathIfNotNull(filePath));
         } catch (IOException ioe) {
             throw new AssertionError("There should not be an error writing to the file.", ioe);
         }
     }
 
     @Test
-    public void saveAddressBook_nullFilePath_throwsNullPointerException() {
-        assertThrows(NullPointerException.class, () -> saveAddressBook(new MedInfo(), null));
+    public void saveMedInfo_nullFilePath_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> saveMedInfo(new MedInfo(), null));
     }
 }
